@@ -32,14 +32,34 @@ namespace TechJobs.Controllers
             if (column.Equals("all"))
             {
                 List<Dictionary<string, string>> jobs = JobData.FindAll();
+
+                List<KeyValuePair<string, string>> jobsKVP = new List<KeyValuePair<string, string>>();
+
+                foreach (Dictionary<string, string> job in jobs)
+                {
+                    foreach (string key in job.Keys)
+                    {
+                        string thisValue = job[key];
+                        jobsKVP.Add(new KeyValuePair<string, string>(key, thisValue));
+                    }
+
+                }
+
+                 
+
                 ViewBag.title =  "All Jobs";
-                ViewBag.jobs = jobs;
+                ViewBag.jobsKVP = jobsKVP;
+            
+                
                 return View("Jobs");
             }
             else
             {
                 List<string> items = JobData.FindAll(column);
                 ViewBag.title =  "All " + columnChoices[column] + " Values";
+
+                string cc = columnChoices[column];
+
                 ViewBag.column = column;
                 ViewBag.items = items;
                 return View();
@@ -49,8 +69,23 @@ namespace TechJobs.Controllers
         public IActionResult Jobs(string column, string value)
         {
             List<Dictionary<String, String>> jobs = JobData.FindByColumnAndValue(column, value);
+
+
+            List<KeyValuePair<string, string>> jobsKVP = new List<KeyValuePair<string, string>>();
+
+            foreach (Dictionary<string, string> job in jobs)
+            {
+                foreach (string key in job.Keys)
+                {
+                    string thisValue = job[key];
+                    jobsKVP.Add(new KeyValuePair<string, string>(key, thisValue));
+                }
+            }
+
+
             ViewBag.title = "Jobs with " + columnChoices[column] + ": " + value;
-            ViewBag.jobs = jobs;
+            ViewBag.jobsKVP = jobsKVP;
+
 
             return View();
         }

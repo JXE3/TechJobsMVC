@@ -10,13 +10,23 @@ namespace TechJobs.Models
         static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
 
+
         public static List<Dictionary<string, string>> FindAll()
+
+        
         {
             LoadData();
+            return AllJobs;
 
-            // Bonus mission: return a copy
-            return new List<Dictionary<string, string>>(AllJobs);
+        
+         
+            
+                // Bonus mission: return a copy
+                // return new List<Dictionary<string, string>>(AllJobs);
         }
+
+
+
 
         /*
          * Returns a list of all values contained in a given column,
@@ -137,6 +147,7 @@ namespace TechJobs.Models
                 for (int i = 0; i < headers.Length; i++)
                 {
                     rowDict.Add(headers[i], row[i]);
+                    
                 }
                 AllJobs.Add(rowDict);
             }
